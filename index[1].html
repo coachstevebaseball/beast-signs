@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0A1628">
+<meta name="description" content="Coach Steve Baseball 15U indicator sign system — decoder, rules, and quiz for players">
+<title>15U Sign System | Coach Steve Baseball</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-primary: #0A1628;
+  --bg-secondary: #0f1419;
+  --bg-card: #15202E;
+  --bg-elevated: #1B2937;
+  --accent: #DC2626;
+  --accent-dim: rgba(220, 38, 38, 0.12);
+  --accent-border: rgba(220, 38, 38, 0.35);
+  --text-primary: #FFFFFF;
+  --text-body: #E5E7EB;
+  --text-secondary: #9CA3AF;
+  --text-tertiary: #6B7280;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --success: #22C55E;
+  --success-bg: rgba(34, 197, 94, 0.1);
+  --font-display: 'Anton', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg-primary);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overscroll-behavior: none;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.brand-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.header .subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* TABS */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 8px;
+  z-index: 10;
+  border: 1px solid var(--border);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 6px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.tab-btn:not(.active):active {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* SECTION LABEL */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card-accent {
+  background: var(--accent-dim);
+  border-color: var(--accent-border);
+}
+
+/* INDICATOR / KILL SWITCH GRID */
+.indicator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.indicator-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.indicator-card.is-indicator {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.indicator-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 7px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.tag-red { background: var(--accent); color: #FFFFFF; }
+.tag-dark { background: var(--bg-secondary); color: var(--text-body); border: 1px solid var(--border); }
+
+.indicator-card .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.indicator-card .desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* PLAY ITEM */
+.play-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.play-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.play-info { flex: 1; }
+.play-info .play-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.play-info .play-trigger {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* OBVIOUS SIGNS */
+.obvious-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.obvious-item {
+  background: var(--bg-elevated);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.obvious-item .name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.obvious-item .desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* RULE CARDS */
+.rule-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.rule-card.is-critical {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.rule-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.rule-content .rule-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.rule-content .rule-desc {
+  font-size: 13px;
+  color: var(--text-body);
+  line-height: 1.55;
+}
+
+.rule-content em { color: var(--text-primary); font-style: normal; font-weight: 600; }
+.rule-content strong { color: var(--text-primary); font-weight: 700; }
+
+/* ROUTINE */
+.routine-banner {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.routine-banner .label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.routine-banner .text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.routine-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.routine-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.routine-header .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.routine-header .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 8px 0;
+}
+
+.step + .step { border-top: 1px solid var(--border); }
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 20px;
+  padding-top: 1px;
+}
+
+.step-text {
+  font-size: 13px;
+  color: var(--text-body);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.step-text strong { color: var(--text-primary); font-weight: 700; }
+.step-text em { color: var(--text-secondary); font-style: normal; }
+
+/* DECODER */
+.decoder-help {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.body-map {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.body-map svg {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.tap-zone { cursor: pointer; transition: all 0.1s ease; }
+.tap-zone:active { transform: scale(0.92); transform-origin: center; transform-box: fill-box; }
+
+.sequence-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  min-height: 56px;
+}
+
+.sequence-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.sequence-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 24px;
+}
+
+.sequence-empty {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pill-normal {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.pill-swipe {
+  background: var(--accent);
+  color: #FFFFFF;
+}
+
+.pill-arrow {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.result-card.is-active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.result-card .label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.result-card .call {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.result-card.is-active .call { color: var(--accent); }
+
+.result-card .explain {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* BUTTONS */
+.btn {
+  width: 100%;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  padding: 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn:active { background: var(--bg-elevated); transform: scale(0.99); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #FFFFFF;
+}
+
+.btn-primary:active { background: #B91C1C; }
+
+/* QUIZ */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.quiz-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quiz-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.quiz-score .num { color: var(--accent); }
+
+.quiz-prompt {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.quiz-sequence {
+  background: var(--bg-elevated);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 56px;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.quiz-opt {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  padding: 14px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quiz-opt:active { background: var(--bg-secondary); }
+.quiz-opt.correct {
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--success);
+}
+.quiz-opt.wrong {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.quiz-opt.disabled { opacity: 0.4; }
+
+.quiz-feedback {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: none;
+}
+
+.quiz-feedback.correct {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.quiz-feedback.wrong {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.quiz-feedback strong { font-weight: 700; }
+
+.quiz-result {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.quiz-result .score {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.quiz-result .msg {
+  font-size: 14px;
+  color: var(--text-body);
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.footer .tagline {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.footer .brand {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* SAFE AREA for iOS */
+@supports (padding: max(0px)) {
+  .container { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); padding-bottom: max(80px, env(safe-area-inset-bottom)); }
+}
+
+/* PRINT */
+@media print {
+  body { background: white; color: black; }
+  .tabs, .btn { display: none; }
+  .panel { display: block !important; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand-tag">COACH STEVE BASEBALL · 15U</div>
+    <h1>Sign System</h1>
+    <p class="subtitle">Every pitch starts fresh · Eyes on me, every time</p>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="signs" role="tab">Signs</button>
+    <button class="tab-btn" data-tab="rules" role="tab">Rules</button>
+    <button class="tab-btn" data-tab="routine" role="tab">Routine</button>
+    <button class="tab-btn" data-tab="decode" role="tab">Decoder</button>
+    <button class="tab-btn" data-tab="quiz" role="tab">Quiz</button>
+  </nav>
+
+  <!-- PANEL: SIGNS -->
+  <section id="panel-signs" class="panel active">
+    <div class="indicator-grid">
+      <div class="indicator-card is-indicator">
+        <span class="indicator-tag tag-red">INDICATOR</span>
+        <div class="title">Touch chin</div>
+        <div class="desc">Next touch = the call</div>
+      </div>
+      <div class="indicator-card">
+        <span class="indicator-tag tag-dark">KILL SWITCH</span>
+        <div class="title">Swipe chest</div>
+        <div class="desc">Permanently wipes the sequence</div>
+      </div>
+    </div>
+
+    <div class="section-label">PLAYS (REQUIRE INDICATOR)</div>
+    <div class="play-item">
+      <div class="play-icon">↗</div>
+      <div class="play-info">
+        <div class="play-name">Steal</div>
+        <div class="play-trigger">Touch shoulder</div>
+      </div>
+    </div>
+    <div class="play-item">
+      <div class="play-icon">✋</div>
+      <div class="play-info">
+        <div class="play-name">Hit and run</div>
+        <div class="play-trigger">Touch hand</div>
+      </div>
+    </div>
+    <div class="play-item">
+      <div class="play-icon">◎</div>
+      <div class="play-info">
+        <div class="play-name">Bunt for a hit</div>
+        <div class="play-trigger">Touch middle of chest</div>
+      </div>
+    </div>
+    <div class="play-item" style="margin-bottom: 20px;">
+      <div class="play-icon">⚙</div>
+      <div class="play-info">
+        <div class="play-name">Sacrifice bunt</div>
+        <div class="play-trigger">Touch belt</div>
+      </div>
+    </div>
+
+    <div class="section-label">OBVIOUS SIGNS (NO INDICATOR NEEDED)</div>
+    <div class="obvious-grid">
+      <div class="obvious-item">
+        <div class="name">Take</div>
+        <div class="desc">Arm out, palm down</div>
+      </div>
+      <div class="obvious-item">
+        <div class="name">Swing away</div>
+        <div class="desc">Fists pounding together</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: RULES -->
+  <section id="panel-rules" class="panel">
+    <div class="rule-card">
+      <div class="rule-num">1</div>
+      <div class="rule-content">
+        <div class="rule-title">First chin = the indicator</div>
+        <div class="rule-desc">Everything before the first chin is decoy. The very next touch after that chin is the actual call.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">2</div>
+      <div class="rule-content">
+        <div class="rule-title">Lock the call. Ignore everything after.</div>
+        <div class="rule-desc">Once you've read chin + the next touch, lock it in. Extra chins, more touches — all decoys. Only the swipe can change it.</div>
+      </div>
+    </div>
+
+    <div class="rule-card is-critical">
+      <div class="rule-num">3</div>
+      <div class="rule-content">
+        <div class="rule-title">Swipe is dominant. Permanently.</div>
+        <div class="rule-desc">If I swipe my hand across my chest <em>at any point in the sequence</em>, the whole thing is dead. A chin after the swipe does NOT restart it. Swipe wins.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">4</div>
+      <div class="rule-content">
+        <div class="rule-title">Obvious signs skip the chin</div>
+        <div class="rule-desc">Take (arm held out, palm down) and swing away (fists pounding) are given openly. No indicator. They're meant to be seen.</div>
+      </div>
+    </div>
+
+    <div class="rule-card is-critical">
+      <div class="rule-num">5</div>
+      <div class="rule-content">
+        <div class="rule-title">Every pitch is a new sequence</div>
+        <div class="rule-desc">After every pitch, the hitter steps out and looks at me for new signs. Runners stay ON the bag, eyes on me, until they have the signs. <strong>Nobody moves until everybody's in congruence.</strong> The new sign could be the same as last time or completely different — assume nothing.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: ROUTINE -->
+  <section id="panel-routine" class="panel">
+    <div class="routine-banner">
+      <div class="label">THE STANDARD</div>
+      <div class="text">Eyes on coach. Every pitch. No exceptions.</div>
+    </div>
+
+    <div class="routine-section">
+      <div class="routine-header">
+        <div class="icon">🏏</div>
+        <div class="title">Hitter routine</div>
+      </div>
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-text">Pitch ends. <em>Don't stay in the box assuming.</em></div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-text">Step out with the back foot.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-text">Look at me. Read the full sequence. <em>Don't guess — wait for the whole thing.</em></div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-text">Confirm the call in your head, then get back in the box.</div>
+      </div>
+    </div>
+
+    <div class="routine-section">
+      <div class="routine-header">
+        <div class="icon">🏃</div>
+        <div class="title">Runner routine</div>
+      </div>
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-text">Pitch ends. <strong>Get back to the bag.</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-text">Foot on the base. Eyes locked on me.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-text"><strong>Do NOT take a lead until you have the signs.</strong> <em>If you lead off early, you're guessing — and you'll get picked.</em></div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-text">Once you've read the signs, take your lead with the play in mind.</div>
+      </div>
+    </div>
+
+    <div class="rule-card is-critical" style="margin-top: 16px;">
+      <div class="rule-num" style="background: var(--accent);">!</div>
+      <div class="rule-content">
+        <div class="rule-title">Why congruence matters</div>
+        <div class="rule-desc">If the hitter sees "hit and run" but the runner missed it, the runner gets thrown out at second on a routine grounder. If the runner sees "steal" but the hitter missed it, he's swinging at a pitchout. <strong>Every player has to be on the same page before the pitch starts.</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: DECODER -->
+  <section id="panel-decode" class="panel">
+    <p class="decoder-help">Tap the spots in the order the coach touches them.</p>
+
+    <div class="body-map">
+      <svg viewBox="0 0 280 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tap body parts to record sign sequence">
+        <!-- body outline -->
+        <circle cx="140" cy="48" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <path d="M 105 80 L 175 80 L 185 200 L 95 200 Z" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <line x1="105" y1="85" x2="60" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <line x1="175" y1="85" x2="220" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+        <!-- CHIN -->
+        <g class="tap-zone" data-sign="chin">
+          <circle cx="140" cy="73" r="16" fill="rgba(220,38,38,0.25)" stroke="#DC2626" stroke-width="1.5"/>
+          <text x="140" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">CHIN</text>
+        </g>
+
+        <!-- SHOULDER -->
+        <g class="tap-zone" data-sign="shoulder">
+          <circle cx="115" cy="92" r="16" fill="#1B2937" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="115" y="96" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">SHLDR</text>
+        </g>
+
+        <!-- CHEST -->
+        <g class="tap-zone" data-sign="chest">
+          <circle cx="140" cy="128" r="16" fill="#1B2937" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="140" y="132" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">CHEST</text>
+        </g>
+
+        <!-- BELT -->
+        <g class="tap-zone" data-sign="belt">
+          <circle cx="140" cy="183" r="16" fill="#1B2937" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="140" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">BELT</text>
+        </g>
+
+        <!-- HAND -->
+        <g class="tap-zone" data-sign="hand">
+          <circle cx="60" cy="170" r="16" fill="#1B2937" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="60" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">HAND</text>
+        </g>
+
+        <!-- ELBOW (decoy) -->
+        <g class="tap-zone" data-sign="elbow">
+          <circle cx="220" cy="135" r="16" fill="#1B2937" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="220" y="139" text-anchor="middle" font-size="9" font-weight="700" fill="#9CA3AF" font-family="JetBrains Mono, monospace">ELBOW</text>
+        </g>
+
+        <!-- SWIPE -->
+        <g class="tap-zone" data-sign="swipe">
+          <rect x="85" y="225" width="110" height="32" rx="16" fill="#DC2626" stroke="#DC2626" stroke-width="1"/>
+          <text x="140" y="245" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF" font-family="JetBrains Mono, monospace">SWIPE CHEST</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="sequence-box">
+      <div class="sequence-label">SEQUENCE</div>
+      <div class="sequence-pills" id="sequence-display">
+        <span class="sequence-empty">Tap a body part to start…</span>
+      </div>
+    </div>
+
+    <div class="result-card" id="result-card">
+      <div class="label">CALL</div>
+      <div class="call" id="result-text">—</div>
+      <div class="explain" id="result-explain">No signs given yet</div>
+    </div>
+
+    <button class="btn" id="reset-btn">Reset for next pitch</button>
+  </section>
+
+  <!-- PANEL: QUIZ -->
+  <section id="panel-quiz" class="panel">
+    <p class="decoder-help">Run through these with the team.</p>
+
+    <div class="card">
+      <div class="quiz-header">
+        <div class="quiz-progress">Question <span id="q-num">1</span> / 7</div>
+        <div class="quiz-score">Score: <span class="num" id="q-score">0</span></div>
+      </div>
+
+      <div class="quiz-prompt">Coach gives this sequence:</div>
+      <div class="quiz-sequence" id="quiz-sequence"></div>
+
+      <div class="quiz-prompt">What's the call?</div>
+      <div class="quiz-options" id="quiz-options"></div>
+
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>
+
+    <button class="btn btn-primary" id="next-q-btn" style="display: none;">Next question</button>
+    <button class="btn btn-primary" id="restart-quiz-btn" style="display: none;">Run it back</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="tagline">Process Over Outcome</div>
+    <div class="brand">coachstevebaseball.com</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const SIGN_LABELS = {
+    chin: 'chin', shoulder: 'shoulder', hand: 'hand',
+    chest: 'chest', belt: 'belt', elbow: 'elbow', swipe: 'swipe'
+  };
+
+  const PLAY_FROM_SIGN = {
+    shoulder: 'Steal',
+    hand: 'Hit & Run',
+    chest: 'Bunt for hit',
+    belt: 'Sac bunt'
+  };
+
+  // DECODE LOGIC
+  // 1. ANY swipe anywhere = Nothing. Permanent.
+  // 2. Find FIRST chin. Next touch = the call.
+  // 3. If next touch isn't a play sign, no call.
+  function decode(seq) {
+    if (seq.length === 0) return { call: '—', explain: 'No signs given yet', active: false };
+    if (seq.includes('swipe')) {
+      return { call: 'Nothing', explain: 'Swipe kills the sequence. Swing away.', active: false };
+    }
+    const firstChin = seq.indexOf('chin');
+    if (firstChin === -1) {
+      return { call: 'Nothing', explain: 'No chin in the sequence. All decoys.', active: false };
+    }
+    const nextTouch = seq[firstChin + 1];
+    if (!nextTouch) {
+      return { call: 'Waiting…', explain: 'Indicator given. The next touch is the call.', active: false };
+    }
+    if (PLAY_FROM_SIGN[nextTouch]) {
+      return {
+        call: PLAY_FROM_SIGN[nextTouch],
+        explain: `Chin → ${SIGN_LABELS[nextTouch]} = ${PLAY_FROM_SIGN[nextTouch].toLowerCase()}. Locked in.`,
+        active: true
+      };
+    }
+    return {
+      call: 'Nothing',
+      explain: `Chin was followed by ${SIGN_LABELS[nextTouch]} — not a play sign. Swing away.`,
+      active: false
+    };
+  }
+
+  // TABS
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-tab');
+      tabBtns.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // DECODER
+  let sequence = [];
+  const seqDisplay = document.getElementById('sequence-display');
+  const resultText = document.getElementById('result-text');
+  const resultExplain = document.getElementById('result-explain');
+  const resultCard = document.getElementById('result-card');
+
+  function buildPill(sign, isLast) {
+    const isSwipe = sign === 'swipe';
+    const pillClass = isSwipe ? 'pill-swipe' : 'pill-normal';
+    const arrow = isLast ? '' : '<span class="pill-arrow">→</span>';
+    return `<span class="pill ${pillClass}">${SIGN_LABELS[sign]}</span>${arrow}`;
+  }
+
+  function renderSequence() {
+    if (sequence.length === 0) {
+      seqDisplay.innerHTML = '<span class="sequence-empty">Tap a body part to start…</span>';
+    } else {
+      seqDisplay.innerHTML = sequence.map((s, i) => buildPill(s, i === sequence.length - 1)).join('');
+    }
+    const result = decode(sequence);
+    resultText.textContent = result.call;
+    resultExplain.textContent = result.explain;
+    resultCard.classList.toggle('is-active', result.active);
+  }
+
+  document.querySelectorAll('.tap-zone').forEach(zone => {
+    zone.addEventListener('click', () => {
+      sequence.push(zone.getAttribute('data-sign'));
+      renderSequence();
+      // Haptic feedback on mobile
+      if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(10);
+      }
+    });
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    sequence = [];
+    renderSequence();
+    if (window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(20);
+    }
+  });
+
+  // QUIZ
+  const QUIZ = [
+    {
+      seq: ['hand', 'elbow', 'shoulder', 'chin', 'shoulder', 'elbow', 'hand'],
+      answer: 'Steal',
+      explain: 'Chin was the indicator. Shoulder right after = steal. Everything after is decoy.'
+    },
+    {
+      seq: ['chin', 'shoulder', 'swipe', 'chin', 'shoulder'],
+      answer: 'Nothing',
+      explain: 'The swipe killed everything. A new chin after the swipe does NOT restart the system.'
+    },
+    {
+      seq: ['elbow', 'hand', 'chin', 'chest', 'shoulder', 'belt'],
+      answer: 'Bunt for hit',
+      explain: 'Chin → chest = bunt for a hit. The shoulder and belt after are decoys.'
+    },
+    {
+      seq: ['shoulder', 'chin', 'belt', 'hand', 'elbow'],
+      answer: 'Sac bunt',
+      explain: 'Chin → belt = sacrifice bunt. The opening shoulder was a decoy before the indicator.'
+    },
+    {
+      seq: ['hand', 'chin', 'hand', 'swipe', 'shoulder', 'chin', 'belt'],
+      answer: 'Nothing',
+      explain: 'Hit & run was on after chin → hand. Swipe killed it. The chin and belt after the swipe do NOT restart anything.'
+    },
+    {
+      seq: ['chin', 'hand', 'shoulder', 'chin', 'belt'],
+      answer: 'Hit & Run',
+      explain: 'The FIRST chin is the indicator. Hand right after = hit and run, locked in. Second chin and belt are decoys.'
+    },
+    {
+      seq: ['chin', 'shoulder'],
+      answer: 'Steal',
+      explain: 'New pitch, new sequence. Last pitch was wiped clean. Chin → shoulder = steal.'
+    }
+  ];
+
+  let qIndex = 0;
+  let qScore = 0;
+  let qAnswered = false;
+
+  function renderQuiz() {
+    const seqEl = document.getElementById('quiz-sequence');
+    const optsEl = document.getElementById('quiz-options');
+    const fbEl = document.getElementById('quiz-feedback');
+    const nextBtn = document.getElementById('next-q-btn');
+    const restartBtn = document.getElementById('restart-quiz-btn');
+
+    if (qIndex >= QUIZ.length) {
+      const msg = qScore === QUIZ.length
+        ? 'Locked in. You know the system.'
+        : qScore >= 5
+          ? 'Solid. Run it again to lock it in.'
+          : 'Re-read the rules and run it back.';
+      seqEl.innerHTML = `<div class="quiz-result"><div class="score">${qScore} / ${QUIZ.length}</div><div class="msg">${msg}</div></div>`;
+      optsEl.innerHTML = '';
+      fbEl.style.display = 'none';
+      nextBtn.style.display = 'none';
+      restartBtn.style.display = 'block';
+      document.querySelector('.quiz-prompt').style.display = 'none';
+      document.querySelectorAll('.quiz-prompt')[1] && (document.querySelectorAll('.quiz-prompt')[1].style.display = 'none');
+      document.querySelector('.quiz-header').style.display = 'none';
+      return;
+    }
+
+    const q = QUIZ[qIndex];
+    qAnswered = false;
+    document.getElementById('q-num').textContent = qIndex + 1;
+    document.getElementById('q-score').textContent = qScore;
+
+    seqEl.innerHTML = q.seq.map((s, i) => buildPill(s, i === q.seq.length - 1)).join('');
+
+    const options = ['Steal', 'Hit & Run', 'Bunt for hit', 'Sac bunt', 'Nothing'];
+    const shuffled = [q.answer, ...options.filter(o => o !== q.answer)].slice(0, 4).sort(() => Math.random() - 0.5);
+
+    optsEl.innerHTML = shuffled.map(opt => `<button class="quiz-opt" data-opt="${opt}">${opt}</button>`).join('');
+
+    document.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (qAnswered) return;
+        qAnswered = true;
+        const chosen = btn.getAttribute('data-opt');
+        const correct = chosen === q.answer;
+        if (correct) qScore++;
+
+        if (window.navigator && window.navigator.vibrate) {
+          window.navigator.vibrate(correct ? 15 : [10, 50, 10]);
+        }
+
+        document.querySelectorAll('.quiz-opt').forEach(b => {
+          const o = b.getAttribute('data-opt');
+          b.disabled = true;
+          if (o === q.answer) b.classList.add('correct');
+          else if (o === chosen) b.classList.add('wrong');
+          else b.classList.add('disabled');
+        });
+
+        fbEl.style.display = 'block';
+        fbEl.className = 'quiz-feedback ' + (correct ? 'correct' : 'wrong');
+        fbEl.innerHTML = `<strong>${correct ? 'Right.' : 'Not quite.'}</strong> ${q.explain}`;
+
+        document.getElementById('q-score').textContent = qScore;
+        nextBtn.style.display = 'block';
+        nextBtn.textContent = qIndex === QUIZ.length - 1 ? 'See result' : 'Next question';
+      });
+    });
+  }
+
+  document.getElementById('next-q-btn').addEventListener('click', () => {
+    qIndex++;
+    document.getElementById('next-q-btn').style.display = 'none';
+    document.getElementById('quiz-feedback').style.display = 'none';
+    renderQuiz();
+  });
+
+  document.getElementById('restart-quiz-btn').addEventListener('click', () => {
+    qIndex = 0;
+    qScore = 0;
+    document.getElementById('restart-quiz-btn').style.display = 'none';
+    document.querySelector('.quiz-header').style.display = 'flex';
+    document.querySelectorAll('.quiz-prompt').forEach(el => el.style.display = 'block');
+    renderQuiz();
+  });
+
+  renderSequence();
+  renderQuiz();
+})();
+</script>
+
+</body>
+</html>
